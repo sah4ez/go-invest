@@ -1,0 +1,11 @@
+package: go-invest
+import:
+- package: github.com/lib/pq
+  version: b609790bd85edf8e9ab7e0f8912750a786177bcf
+  repo: git@github.com:lib/pq.git
+- package: github.com/bradfitz/gomemcache/memcache
+  version: 1952afaa557dc08e8e0d89eafab110fb501c1a2b
+  repo: git@github.com:bradfitz/gomemcache.git
+- package: github.com/mattes/migrate.git
+  version: ^v3.0.1
+  repo: git@github.com:mattes/migrate.git

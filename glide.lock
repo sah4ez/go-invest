@@ -1,0 +1,15 @@
+hash: 01df30a7e283ae98d35f69dc4edfdf5e8477c9eb9d038cf53682a460408fa19b
+updated: 2017-11-05T21:13:13.651006313+03:00
+imports:
+- name: github.com/bradfitz/gomemcache
+  version: 1952afaa557dc08e8e0d89eafab110fb501c1a2b
+  repo: git@github.com:bradfitz/gomemcache.git
+  subpackages:
+  - memcache
+- name: github.com/lib/pq
+  version: b609790bd85edf8e9ab7e0f8912750a786177bcf
+  repo: git@github.com:lib/pq.git
+- name: github.com/mattes/migrate.git
+  version: 035c07716cd373d88456ec4d701402df52584cb4
+  repo: git@github.com:mattes/migrate.git
+testImports: []
