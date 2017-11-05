@@ -8,6 +8,7 @@ import (
 	"github.com/mattes/migrate"
 	"github.com/mattes/migrate/database/postgres"
 	_ "github.com/mattes/migrate/source/file"
+	"github.com/sah4ez/go-invest/loader"
 )
 
 var (
@@ -42,10 +43,13 @@ func main() {
 	db, err := sql.Open("postgres", connStr)
 	checkError(err)
 	defer db.Close()
+
 	err = db.Ping()
 	checkError(err)
-	fmt.Println("final")
+	err = loader.Securities()
+	checkError(err)
 
+	fmt.Println("final")
 }
 
 func checkError(err error) {
