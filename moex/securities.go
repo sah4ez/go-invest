@@ -1,5 +1,11 @@
 package moex
 
+import (
+	"fmt"
+
+	"github.com/jinzhu/gorm"
+)
+
 type HistorySecurities struct {
 	Metadata MetadataSecurities `json:"metadata"`
 	Columns  []string           `json:"columns"`
@@ -27,4 +33,23 @@ type MetadataSecurities struct {
 	MARKETPRICE3TRADESVALUE MetaValue `json:"MARKETPRICE3TRADESVALUE"`
 	ADMITTEDVALUE           MetaValue `json:"ADMITTEDVALUE"`
 	WAVAL                   MetaValue `json:"WAVAL"`
+}
+
+type Instrument struct {
+	gorm.Model
+	ShortName string `json:"SHORTNAME"`
+	SecId     string `json:"SECID"`
+	Raw       string `json:"json"`
+}
+
+func NewInstrument(raw []interface{}) (Instrument, error) {
+	if len(raw) < 19 {
+		panic("ivalid count input fields in raw arrya")
+	}
+	data := Instrument{
+		ShortName: raw[2].(string),
+		SecId:     raw[3].(string),
+		Raw:       fmt.Sprintf("%+v", raw),
+	}
+	return data, nil
 }

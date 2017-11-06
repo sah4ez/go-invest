@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS instrument;
+DROP TABLE IF EXISTS instruments;

@@ -6,17 +6,19 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/sah4ez/go-invest/moex"
 )
 
 //Securities load all instrument from moex and persisted to DB
-func Securities() error {
-	sec, err := iterationSecurities(start)
+func Securities(connStr string) error {
+	sec, err := iterationSecurities("0")
 	if err != nil {
 		return err
 	}
 	for _, i := range sec.History.Data {
-		fmt.Printf("%+v\n", i)
+		go persist(i, connStr)
 	}
 
 	for {
@@ -29,7 +31,7 @@ func Securities() error {
 			return err
 		}
 		for _, i := range sec.History.Data {
-			fmt.Printf("%+v\n", i)
+			go persist(i, connStr)
 		}
 	}
 	return nil
@@ -62,4 +64,17 @@ func iterationSecurities(start string) (moex.Securities, error) {
 	}
 	//fmt.Printf("%+v\n", sec)
 	return sec, nil
+}
+
+func persist(raw []interface{}, connStr string) {
+	data, err := moex.NewInstrument(raw)
+	if err != nil {
+		panic("cannot create instrument dto")
+	}
+	db, err := gorm.Open("postgres", connStr)
+	defer db.Close()
+	if err != nil {
+		panic("cannot connect to db")
+	}
+	db.Create(&data)
 }

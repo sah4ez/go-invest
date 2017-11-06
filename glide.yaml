@@ -9,3 +9,7 @@ import:
 - package: github.com/mattes/migrate.git
   version: ^v3.0.1
   repo: git@github.com:mattes/migrate.git
+- package: github.com/jinzhu/gorm
+  version: 0a51f6cdc55d1650d9ed3b4c13026cfa9133b01e
+  repo: git@github.com:jinzhu/gorm.git
+

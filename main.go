@@ -12,26 +12,34 @@ import (
 )
 
 var (
-	db      *sql.DB
-	connStr string
+	db  *sql.DB
+	cfg *appConfig
 )
 
+type appConfig struct {
+	pgUser     string
+	pgPassword string
+	pgDb       string
+	connStr    string
+}
+
 func init() {
-	pgUser := os.Getenv("POSTGRES_USER")
-	pgPassword := os.Getenv("POSTGRES_PASSWORD")
-	pgDb := os.Getenv("POSTGRES_DB")
+	cfg = &appConfig{
+		pgUser:     os.Getenv("POSTGRES_USER"),
+		pgPassword: os.Getenv("POSTGRES_PASSWORD"),
+		pgDb:       os.Getenv("POSTGRES_DB"),
+	}
+	cfg.connStr = "user=" + cfg.pgUser + " dbname=" + cfg.pgDb + " password=" + cfg.pgPassword + " sslmode=disable"
 
-	connStr = "user=" + pgUser + " dbname=" + pgDb + " password=" + pgPassword + " sslmode=disable"
-
-	db, err := sql.Open("postgres", connStr)
-	checkError(err)
+	db, err := sql.Open("postgres", cfg.connStr)
+	fmt.Println("Ok")
 
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
 	checkError(err)
 
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://./migrations",
-		pgDb,
+		cfg.pgDb,
 		driver)
 	checkError(err)
 
@@ -40,13 +48,13 @@ func init() {
 }
 
 func main() {
-	db, err := sql.Open("postgres", connStr)
+	db, err := sql.Open("postgres", cfg.connStr)
 	checkError(err)
 	defer db.Close()
 
 	err = db.Ping()
 	checkError(err)
-	err = loader.Securities()
+	err = loader.Securities(cfg.connStr)
 	checkError(err)
 
 	fmt.Println("final")
