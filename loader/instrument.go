@@ -18,7 +18,7 @@ func Securities(connStr string) error {
 		return err
 	}
 	for _, i := range sec.History.Data {
-		go persist(i, connStr)
+		persist(i, connStr)
 	}
 
 	for {
@@ -31,7 +31,7 @@ func Securities(connStr string) error {
 			return err
 		}
 		for _, i := range sec.History.Data {
-			go persist(i, connStr)
+			persist(i, connStr)
 		}
 	}
 	return nil
@@ -69,12 +69,15 @@ func iterationSecurities(start string) (moex.Securities, error) {
 func persist(raw []interface{}, connStr string) {
 	data, err := moex.NewInstrument(raw)
 	if err != nil {
+		fmt.Printf("Error: \t%s\n", err.Error())
 		panic("cannot create instrument dto")
 	}
 	db, err := gorm.Open("postgres", connStr)
 	defer db.Close()
 	if err != nil {
+		fmt.Printf("Error: \t%s\n", err.Error())
 		panic("cannot connect to db")
 	}
+	db.Where(moex.Instrument{SecId: data.SecId}).FirstOrCreate(&data)
 	db.Create(&data)
 }

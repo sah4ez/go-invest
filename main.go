@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"flag"
 	"fmt"
 	"os"
 
@@ -23,31 +24,25 @@ type appConfig struct {
 	connStr    string
 }
 
-func init() {
+func main() {
+	var (
+		migration = flag.Bool("migration", false, "Run migration scripts for PG")
+	)
+	flag.Parse()
+
 	cfg = &appConfig{
 		pgUser:     os.Getenv("POSTGRES_USER"),
 		pgPassword: os.Getenv("POSTGRES_PASSWORD"),
 		pgDb:       os.Getenv("POSTGRES_DB"),
 	}
 	cfg.connStr = "user=" + cfg.pgUser + " dbname=" + cfg.pgDb + " password=" + cfg.pgPassword + " sslmode=disable"
+	fmt.Printf("Config: %+v\n", cfg)
 
-	db, err := sql.Open("postgres", cfg.connStr)
-	fmt.Println("Ok")
+	if *migration {
+		migrationScripts()
+		fmt.Println("Migration applied... \tOk")
+	}
 
-	driver, err := postgres.WithInstance(db, &postgres.Config{})
-	checkError(err)
-
-	m, err := migrate.NewWithDatabaseInstance(
-		"file://./migrations",
-		cfg.pgDb,
-		driver)
-	checkError(err)
-
-	err = m.Up()
-	checkError(err)
-}
-
-func main() {
 	db, err := sql.Open("postgres", cfg.connStr)
 	checkError(err)
 	defer db.Close()
@@ -60,8 +55,42 @@ func main() {
 	fmt.Println("final")
 }
 
-func checkError(err error) {
-	if err != nil {
-		fmt.Println(err.Error())
+func migrationScripts() {
+	db, err := sql.Open("postgres", cfg.connStr)
+	if checkError(err) {
+		fmt.Println("Cannot get sql.DB")
+		return
 	}
+	fmt.Println("DB... \tOk")
+
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	if checkError(err) {
+		fmt.Println("Cannot get instance DB")
+		return
+	}
+	fmt.Println("New instance... \tOk")
+
+	m, err := migrate.NewWithDatabaseInstance(
+		"file://./migrations",
+		cfg.pgDb,
+		driver)
+	if checkError(err) {
+		fmt.Println("Cannot get NewInstance with migration files")
+		return
+	}
+	fmt.Println("Migration... \tOk")
+
+	err = m.Up()
+	if checkError(err) {
+		fmt.Println("Cannot update migration")
+		return
+	}
+	fmt.Println("Migration update... \tOk")
+}
+
+func checkError(err error) bool {
+	if err != nil {
+		fmt.Printf("Error: \t%s\n", err.Error())
+	}
+	return err != nil
 }

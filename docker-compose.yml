@@ -1,33 +1,51 @@
-version: '3'
+version: '3.4'
+
+networks:
+  goinvest:
 
 services:
   postgres:
     image: postgres:10.0
-    container_name: goinvest-postgres
     ports: 
     - "5432:5432"
     volumes: 
-    - ./pg_data:/var/lib/postgresql/data
+    - $PWD/pg_data:/var/lib/postgresql/data
     environment:
     - POSTGRES_PASSWORD
     - POSTGRES_USER
     - POSTGRES_DB
+    networks:
+      goinvest:
+        aliases:
+        - pg
+        
   memcached:
     image: memcached:1.5.2
-    container_name: goinvest-memcached
     ports:
     - "11211:11211"
+    networks:
+      goinvest:
+        aliases:
+        - cache
     deploy:
       resources:
         limits:
           memory: '200m'
         reservations:
           memory: '100m'
+
   pgadmin4:
     image: thajeztah/pgadmin4
-    container_name: pgadmin4
-    links: 
-    - postgres
     ports:
     - "5050:5050"
+    networks:
+      goinvest:
+        aliases:
+        - pgadmin
+    deploy:
+      resources:
+        limits:
+          memory: '300m'
+        reservations:
+          memory: '150m'
 

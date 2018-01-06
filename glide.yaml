@@ -1,4 +1,4 @@
-package: go-invest
+package: github.com/sah4ez/go-invest
 import:
 - package: github.com/lib/pq
   version: b609790bd85edf8e9ab7e0f8912750a786177bcf

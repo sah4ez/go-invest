@@ -1,5 +1,5 @@
-hash: c746e4c16a2970f1a99c74e40523f0b0b731830ab7169138f1c3960c61e85445
-updated: 2017-11-06T09:33:15.758359535+03:00
+hash: 86a8157ab49213df429850e898546566c9a0d59583dfd2290c998b373aca73a2
+updated: 2018-01-05T23:45:38.152325+03:00
 imports:
 - name: github.com/bradfitz/gomemcache
   version: 1952afaa557dc08e8e0d89eafab110fb501c1a2b
@@ -9,15 +9,18 @@ imports:
 - name: github.com/jinzhu/gorm
   version: 0a51f6cdc55d1650d9ed3b4c13026cfa9133b01e
   repo: git@github.com:jinzhu/gorm.git
+  subpackages:
+  - dialects/postgres
 - name: github.com/jinzhu/inflection
   version: 1c35d901db3da928c72a72d8458480cc9ade058f
 - name: github.com/lib/pq
   version: b609790bd85edf8e9ab7e0f8912750a786177bcf
   repo: git@github.com:lib/pq.git
   subpackages:
+  - hstore
   - oid
 - name: github.com/mattes/migrate
-  version: 69472d5f5cdca0fb2766d8d86f63cb2e78e1d869
+  version: d23f71b03c4a439b81ccccb2ac5090032ec5c735
   subpackages:
   - database
   - database/postgres
