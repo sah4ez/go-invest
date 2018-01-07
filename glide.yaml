@@ -12,4 +12,8 @@ import:
 - package: github.com/jinzhu/gorm
   version: 0a51f6cdc55d1650d9ed3b4c13026cfa9133b01e
   repo: git@github.com:jinzhu/gorm.git
-
+- package: github.com/sirupsen/logrus
+  repo: git@github.com:sirupsen/logrus.git
+  version: ^1.0.4
+- package: golang.org/x/sys
+  version: master

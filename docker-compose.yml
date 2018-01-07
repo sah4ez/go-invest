@@ -34,18 +34,18 @@ services:
         reservations:
           memory: '100m'
 
-  pgadmin4:
-    image: thajeztah/pgadmin4
-    ports:
-    - "5050:5050"
-    networks:
-      goinvest:
-        aliases:
-        - pgadmin
-    deploy:
-      resources:
-        limits:
-          memory: '300m'
-        reservations:
-          memory: '150m'
+          #  pgadmin4:
+          #    image: thajeztah/pgadmin4
+          #    ports:
+          #    - "5050:5050"
+          #    networks:
+          #      goinvest:
+          #        aliases:
+          #        - pgadmin
+          #    deploy:
+          #      resources:
+          #        limits:
+          #          memory: '300m'
+          #        reservations:
+          #          memory: '150m'
 

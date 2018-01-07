@@ -1,5 +1,5 @@
-hash: 86a8157ab49213df429850e898546566c9a0d59583dfd2290c998b373aca73a2
-updated: 2018-01-05T23:45:38.152325+03:00
+hash: 0dcd6eac04aa85bed3065828ddc0863f30859d728c9f385da19387402e67311d
+updated: 2018-01-07T19:50:45.120633+03:00
 imports:
 - name: github.com/bradfitz/gomemcache
   version: 1952afaa557dc08e8e0d89eafab110fb501c1a2b
@@ -29,4 +29,18 @@ imports:
 - name: github.com/mattes/migrate.git
   version: 035c07716cd373d88456ec4d701402df52584cb4
   repo: git@github.com:mattes/migrate.git
+- name: github.com/sirupsen/logrus
+  version: d682213848ed68c0a260ca37d6dd5ace8423f5ba
+  repo: git@github.com:sirupsen/logrus.git
+  subpackages:
+  - hooks/syslog
+- name: golang.org/x/crypto
+  version: 0fcca4842a8d74bfddc2c96a073bd2a4d2a7a2e8
+  subpackages:
+  - ssh/terminal
+- name: golang.org/x/sys
+  version: dd9ec17814d5b1de388ebe438ec013d57d8b3779
+  subpackages:
+  - unix
+  - windows
 testImports: []

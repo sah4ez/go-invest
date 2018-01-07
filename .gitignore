@@ -17,3 +17,4 @@
 .env
 vendor/
 pg_data/
+goinvest

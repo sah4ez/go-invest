@@ -4,10 +4,14 @@ BINARY_NAME=goinvest
 
 .PHONY: run
 run:
-	@env $(shell cat .env | xargs) ./gofolio
+	@env $(shell cat .env | xargs) ./$(BINARY_NAME)
 
 build: $(SOURCE) vendor
 	go build -o $(BINARY_NAME)
+
+.PHONY: test
+test: $(SOURCE)
+	go test $(shell glide novendor)
 
 .PHONY: migration
 migration: migrations vendor
