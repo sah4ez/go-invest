@@ -18,7 +18,7 @@ func Securities(connStr string) error {
 		return err
 	}
 	for _, i := range sec.History.Data {
-		persist(i, connStr)
+		persistSecurities(i, connStr)
 	}
 
 	for {
@@ -31,7 +31,7 @@ func Securities(connStr string) error {
 			return err
 		}
 		for _, i := range sec.History.Data {
-			persist(i, connStr)
+			persistSecurities(i, connStr)
 		}
 	}
 	return nil
@@ -66,7 +66,7 @@ func iterationSecurities(start string) (moex.Securities, error) {
 	return sec, nil
 }
 
-func persist(raw []interface{}, connStr string) {
+func persistSecurities(raw []interface{}, connStr string) {
 	data, err := moex.NewInstrument(raw)
 	if err != nil {
 		fmt.Printf("Error: \t%s\n", err.Error())
@@ -78,6 +78,6 @@ func persist(raw []interface{}, connStr string) {
 		fmt.Printf("Error: \t%s\n", err.Error())
 		panic("cannot connect to db")
 	}
-	db.Where(moex.Instrument{SecId: data.SecId}).FirstOrCreate(&data)
 	db.Create(&data)
+	Prices(data.SecId, connStr)
 }
