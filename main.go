@@ -28,7 +28,6 @@ func main() {
 	cfg = config.New()
 
 	log = logger.NewLogger("main")
-	logger.WithCfg(log, cfg).Infoln("Log created")
 
 	if *migration {
 		migrations.Up(cfg)
@@ -39,6 +38,8 @@ func main() {
 	db, err := sql.Open("postgres", cfg.ConnStr)
 	checkError(err)
 	defer db.Close()
+	logger.AddDBHook(log, db, "main")
+	logger.WithCfg(log, cfg).Infoln("Log created")
 
 	err = db.Ping()
 	checkError(err)

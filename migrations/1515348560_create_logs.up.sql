@@ -1,0 +1,1 @@
+../vendor/gopkg.in/gemnasium/logrus-postgresql-hook.v1/migrations/create_table_logs.sql

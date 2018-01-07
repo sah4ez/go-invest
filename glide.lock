@@ -1,5 +1,5 @@
-hash: 0dcd6eac04aa85bed3065828ddc0863f30859d728c9f385da19387402e67311d
-updated: 2018-01-07T19:50:45.120633+03:00
+hash: 05b303680943a6a6014dc62d06c9a6d820dd66bb3116f17e9900d8ae02ba27e3
+updated: 2018-01-07T20:18:54.072068+03:00
 imports:
 - name: github.com/bradfitz/gomemcache
   version: 1952afaa557dc08e8e0d89eafab110fb501c1a2b
@@ -32,8 +32,6 @@ imports:
 - name: github.com/sirupsen/logrus
   version: d682213848ed68c0a260ca37d6dd5ace8423f5ba
   repo: git@github.com:sirupsen/logrus.git
-  subpackages:
-  - hooks/syslog
 - name: golang.org/x/crypto
   version: 0fcca4842a8d74bfddc2c96a073bd2a4d2a7a2e8
   subpackages:
@@ -43,4 +41,7 @@ imports:
   subpackages:
   - unix
   - windows
+- name: gopkg.in/gemnasium/logrus-postgresql-hook.v1
+  version: 13514cd35e4c57f0e4c25555698baf9c12f5d067
+  repo: git@github.com:gemnasium/logrus-postgresql-hook.git
 testImports: []

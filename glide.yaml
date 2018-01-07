@@ -17,3 +17,6 @@ import:
   version: ^1.0.4
 - package: golang.org/x/sys
   version: master
+- package:  gopkg.in/gemnasium/logrus-postgresql-hook.v1
+  repo: git@github.com:gemnasium/logrus-postgresql-hook.git
+  version: ^1.1.0
